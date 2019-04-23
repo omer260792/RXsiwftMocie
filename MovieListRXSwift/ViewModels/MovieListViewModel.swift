@@ -8,10 +8,12 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import CoreData
 
 struct MovieListViewModel {
-    
+    let relay = BehaviorRelay(value: [Movie].self)
+
     private var movies = Variable<[Movie]>([])
     private var movieDataAccessProvider = MovieDataAccessProvider()
     private var disposeBag = DisposeBag()
@@ -31,12 +33,13 @@ struct MovieListViewModel {
             .subscribe(onNext : { (movies) in
                 self.movies.value = movies
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     // MARK: - add new movie from Core Data
-    public func addMovie(withMovie movie: String) {
-        movieDataAccessProvider.addMovie(withMovie: movie)
+    public func addMovie(withMovie releaseYear: Double, title: String, image: String, rating: Double, genre: [String], barcode: String) {
+        movieDataAccessProvider.addMovie(withMovie: releaseYear, title: title, image: image, rating: rating, genre: genre, barcode: barcode)
+        
     }
     
     // MARK: - toggle selected movie's isCompleted value

@@ -47,12 +47,18 @@ class MovieDataAccessProvider {
     }
     
     // MARK: - add new movie from Core Data
-    public func addMovie(withMovie movie: String) {
+    public func addMovie(withMovie releaseYear: Double, title: String, image: String, rating: Double, genre: [String], barcode: String) {
+        
         let newMovie = NSEntityDescription.insertNewObject(forEntityName: "Movie", into: managedObjectContext) as! Movie
         
-        newMovie.releaseYear = movie
         newMovie.isCompleted = false
-        
+        newMovie.releaseYear = String(format: "%.2f", releaseYear)
+        newMovie.title = title
+        newMovie.image = image
+        newMovie.rating =  String(format: "%.2f", rating)
+        newMovie.genre =  String(format: "%.2f", genre)
+        newMovie.barcode = barcode
+  
         do {
             try managedObjectContext.save()
             movieFromCoreData.value = fetchData()

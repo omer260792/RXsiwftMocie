@@ -1,5 +1,5 @@
 //
-//  movieList.swift
+//  MovieObject.swift
 //  MovieListRXSwift
 //
 //  Created by Omer Cohen on 4/23/19.
@@ -9,8 +9,7 @@
 import Foundation
 
 
-struct MovieList {
-    
+struct MovieObject: Codable {
     let title: String
     let image: String
     let rating: Double

@@ -13,14 +13,13 @@
 		171BD78E226F332500EDD3FB /* MovieListRXSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 171BD78C226F332500EDD3FB /* MovieListRXSwift.xcdatamodeld */; };
 		171BD790226F332600EDD3FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171BD78F226F332600EDD3FB /* Assets.xcassets */; };
 		171BD793226F332600EDD3FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171BD791226F332600EDD3FB /* LaunchScreen.storyboard */; };
-		171BD7A3226F3D3A00EDD3FB /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7A2226F3D3A00EDD3FB /* Movie.swift */; };
 		171BD7AA226F514300EDD3FB /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7A8226F514300EDD3FB /* TableViewController.swift */; };
 		171BD7AB226F514300EDD3FB /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7A9226F514300EDD3FB /* TableViewCell.swift */; };
-		171BD7AD226F5E0900EDD3FB /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7AC226F5E0900EDD3FB /* MovieList.swift */; };
 		171BD7AF226F976200EDD3FB /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7AE226F976200EDD3FB /* Movie+CoreDataClass.swift */; };
 		171BD7B1226F97AD00EDD3FB /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7B0226F97AD00EDD3FB /* Movie+CoreDataProperties.swift */; };
 		171BD7B3226F983900EDD3FB /* MovieDataAccessProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7B2226F983900EDD3FB /* MovieDataAccessProvider.swift */; };
 		171BD7B6226F9DC300EDD3FB /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7B5226F9DC300EDD3FB /* MovieListViewModel.swift */; };
+		171BD7BD226FB14B00EDD3FB /* MovieObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BD7BC226FB14B00EDD3FB /* MovieObject.swift */; };
 		1EA171BD85B601FCD0998458 /* Pods_MovieListRXSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 211A933A937310D537633113 /* Pods_MovieListRXSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,14 +32,13 @@
 		171BD78F226F332600EDD3FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		171BD792226F332600EDD3FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		171BD794226F332600EDD3FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		171BD7A2226F3D3A00EDD3FB /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		171BD7A8226F514300EDD3FB /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		171BD7A9226F514300EDD3FB /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		171BD7AC226F5E0900EDD3FB /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
 		171BD7AE226F976200EDD3FB /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataClass.swift"; sourceTree = "<group>"; };
 		171BD7B0226F97AD00EDD3FB /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		171BD7B2226F983900EDD3FB /* MovieDataAccessProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDataAccessProvider.swift; sourceTree = "<group>"; };
 		171BD7B5226F9DC300EDD3FB /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
+		171BD7BC226FB14B00EDD3FB /* MovieObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieObject.swift; sourceTree = "<group>"; };
 		211A933A937310D537633113 /* Pods_MovieListRXSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieListRXSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D90CB31293815BA3081D5339 /* Pods-MovieListRXSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieListRXSwift.debug.xcconfig"; path = "Target Support Files/Pods-MovieListRXSwift/Pods-MovieListRXSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		F9731D82BE7D6776093C9B1B /* Pods-MovieListRXSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieListRXSwift.release.xcconfig"; path = "Target Support Files/Pods-MovieListRXSwift/Pods-MovieListRXSwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,11 +93,10 @@
 		171BD79A226F3C8300EDD3FB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				171BD7A2226F3D3A00EDD3FB /* Movie.swift */,
-				171BD7AC226F5E0900EDD3FB /* MovieList.swift */,
 				171BD7AE226F976200EDD3FB /* Movie+CoreDataClass.swift */,
 				171BD7B0226F97AD00EDD3FB /* Movie+CoreDataProperties.swift */,
 				171BD7B2226F983900EDD3FB /* MovieDataAccessProvider.swift */,
+				171BD7BC226FB14B00EDD3FB /* MovieObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,9 +259,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				171BD7AF226F976200EDD3FB /* Movie+CoreDataClass.swift in Sources */,
-				171BD7AD226F5E0900EDD3FB /* MovieList.swift in Sources */,
+				171BD7BD226FB14B00EDD3FB /* MovieObject.swift in Sources */,
 				171BD78E226F332500EDD3FB /* MovieListRXSwift.xcdatamodeld in Sources */,
-				171BD7A3226F3D3A00EDD3FB /* Movie.swift in Sources */,
 				171BD7B1226F97AD00EDD3FB /* Movie+CoreDataProperties.swift in Sources */,
 				171BD788226F332500EDD3FB /* ViewController.swift in Sources */,
 				171BD7AB226F514300EDD3FB /* TableViewCell.swift in Sources */,

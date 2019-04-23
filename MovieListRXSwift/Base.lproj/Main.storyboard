@@ -117,10 +117,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="oc6-Yc-Ytv" id="nxh-fk-hSN"/>
-                                    <outlet property="delegate" destination="oc6-Yc-Ytv" id="LcG-cJ-eZT"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
