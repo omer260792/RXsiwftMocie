@@ -53,4 +53,8 @@ struct MovieListViewModel {
         movieDataAccessProvider.removeMovie(withIndex: index)
     }
     
+    
+    public func removeAllMovie(withIndex index: Int) {
+        movieDataAccessProvider.removeMovie(withIndex: index)
+    }
 }

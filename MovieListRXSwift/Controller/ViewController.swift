@@ -22,12 +22,31 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         getMoviesFromRestAPI()
+      //  coreDataExist()
 
 
     }
 
     
     func coreDataExist() -> Bool {
+        
+        let movieList = movieListViewModel.getMovies().asObservable()
+        
+        movieList.subscribe{ element in
+            print(element.element?.count)
+            
+            if let allMovieItemCoreData = element.element?.count {
+                if allMovieItemCoreData > 0{
+                    for n in 0...allMovieItemCoreData {
+                        self.movieListViewModel.removeMovie(withIndex: n)
+                    }
+                }
+               
+            }
+            
+           
+        }.disposed(by: disposeBag)
+        
        
         return true
     }

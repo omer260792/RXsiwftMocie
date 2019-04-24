@@ -16,7 +16,8 @@ class TableViewCell: UITableViewCell {
     @IBOutlet var genreLabel: UILabel!
     @IBOutlet var barcodeLabel: UILabel!
     
-
+    @IBOutlet var imageviewCell: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

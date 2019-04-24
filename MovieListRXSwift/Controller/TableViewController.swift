@@ -11,6 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import CoreData
+import SDWebImage
 
 
 class TableViewController: UIViewController {
@@ -18,82 +19,102 @@ class TableViewController: UIViewController {
     let disposeBag = DisposeBag()
     var movieListViewModel = MovieListViewModel()
 
-
     @IBOutlet var tableView: UITableView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNavigationTopBar()
+        populateTodoListTableView()
+        setupMovieListTableViewCellWhenTapped()
+        setupMovieListTableViewCellWhenDeleted()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ReloadTableView()
+    }
+    
+    
+    private func populateTodoListTableView() {
+            
         let observableMovies = movieListViewModel.getMovies().asObservable()
         
         observableMovies.bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: TableViewCell.self)) { (row, element, cell) in
             
-            cell.titleLabel.text = element.title
+            let imageURL = URL(string: element.image!)
             
+            cell.titleLabel.text = element.title
+            cell.releaseYearLabel.text = element.releaseYear 
+            cell.genreLabel.text = element.genre
+            cell.ratingLabel.text = element.rating
+            cell.barcodeLabel.text = element.barcode
+            cell.imageviewCell?.sd_setImage(with: imageURL, completed:nil)
+
             if element.isCompleted {
                 cell.accessoryType = .checkmark
                 
             } else {
                 cell.accessoryType = .none
             }
-            
-            }
-            
+        }
             .disposed(by: disposeBag)
+    }
+    
+     // MARK: - subscribe to todoListTableView when item has been selected, then toggle todo to persistent storage via viewmodel
+    private func setupMovieListTableViewCellWhenTapped() {
+        tableView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                self.tableView.deselectRow(at: indexPath, animated: false)
+                self.movieListViewModel.toggleMovieIsCompleted(withIndex: indexPath.row)
+            })
+            .disposed(by: disposeBag)
+    }
 
+    
+    // MARK: - subscribe to todoListTableView when item has been deleted, then remove todo to persistent storage via viewmodel
+    private func setupMovieListTableViewCellWhenDeleted() {
+        tableView.rx.itemDeleted
+            .subscribe(onNext : { indexPath in
+                self.movieListViewModel.removeMovie(withIndex: indexPath.row)
+            })
+            .disposed(by: disposeBag)
+    }
+        
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "indentifier" {
+            let dest = segue.destination as! PreviewViewController
+            
+            tableView.rx.itemSelected
+                .subscribe(onNext: { indexPath in
+                   let row =  indexPath.row
+                    dest.movieIndexRow = row
+                    
+                    
+                })
+                .disposed(by: disposeBag)
+
+        }
+    }
+    
+    // MARK: - add title and add right button to segue
+    
+    func setNavigationTopBar() {
+        navigationItem.title = "Movie List"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: nil)
+        if let rightBtn = navigationItem.rightBarButtonItem {
+            rightBtn.rx.tap.subscribe{ _ in
+                self.performSegue(withIdentifier: "yourIdentifierInStoryboard", sender: self)
+                
+                }.disposed(by: disposeBag)
+        }
+    }
+    
+    func ReloadTableView()  {
+        self.tableView.reloadData()
     }
     
     
-    
-    
-
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//
-//        return 1
-//    }
-
-//
-//         let observableMovies = movieListViewModel.getMovies().asObservable()
-        
-        //let movie = moviesCoreData[indexPath.row]
-//        
-//        cell.titleLabel.text = movie.value(forKey: "title") as? String
-//        cell.ratingLabel.text = String(movie.value(forKey: "rating") as! Double)
-//        cell.releaseYearLabel.text = String(movie.value(forKey: "releaseYear") as! Double)
-//        cell.genreLabel.text = movie.value(forKey: "genre") as? String
-////        cell.imageview.sd_setImage(with: URL(string: movie.value(forKey: "image") as! String), placeholderImage: UIImage(named: "defaultImg.png"))
-        
-    
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
-//
-//    func loadDataFromCoreData()  {
-//        
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        do {
-//            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Movie")
-//            let movies = try managedContext.fetch(fetchRequest)
-//            
-//            for movie in movies{
-//                appDelegate.movies.append(movie)
-//            }
-//            moviesCoreData = appDelegate.movies
-//            tableView.reloadData()
-//            
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
-//    }
-//
-//    func  reloadtableViewData() {
-//        tableView.reloadData()
-//
-//    }
-
 }

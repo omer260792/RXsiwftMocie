@@ -13,6 +13,8 @@
 import Foundation
 import CoreData
 import RxSwift
+import UIKit
+import SDWebImage
 
 class MovieDataAccessProvider {
     
@@ -51,12 +53,14 @@ class MovieDataAccessProvider {
         
         let newMovie = NSEntityDescription.insertNewObject(forEntityName: "Movie", into: managedObjectContext) as! Movie
         
+        let string = trimString(genre: genre.description)
+        
         newMovie.isCompleted = false
         newMovie.releaseYear = String(format: "%.2f", releaseYear)
         newMovie.title = title
         newMovie.image = image
         newMovie.rating =  String(format: "%.2f", rating)
-        newMovie.genre =  String(format: "%.2f", genre)
+        newMovie.genre =  string
         newMovie.barcode = barcode
   
         do {
@@ -89,6 +93,60 @@ class MovieDataAccessProvider {
             movieFromCoreData.value = fetchData()
         } catch {
             fatalError("error delete data")
+        }
+    }
+    
+    
+    func trimString(genre: String) -> String {
+        let str = genre
+        var res = str.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
+        res = res.trim("]")
+        let _ : [Character]
+        var string : [String] = []
+        var endstring : String = ""
+        
+        string = res.components(separatedBy: "\"")
+        
+        
+        for n in 0...string.count-1{
+            endstring = endstring + string[n]
+        }
+        return endstring
+    }
+    
+//    // MARK: - remove specified movie from Core Data
+//    public func removeAllMovie(withIndex index: Int) {
+//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Movie")
+//        var moviesCoreData = try managedObjectContext.fetch(fetchRequest)
+//
+//        managedObjectContext.delete(index)
+//        
+//        do {
+//            try managedObjectContext.save()
+//         //   movieFromCoreData.value = fetchData()
+//        } catch {
+//            fatalError("error delete data")
+//        }
+//    }
+//    
+}
+
+
+extension String {
+    
+    func trim(_ string: String) -> String {
+        var set = Set<Character>()
+        for c in string.characters {
+            set.insert(Character(String(c)))
+        }
+        return trim(set)
+    }
+    
+    func trim(_ characters: Set<Character>) -> String {
+        if let index = self.characters.index(where: {!characters.contains($0)}) {
+            return String(self[index..<self.endIndex])
+        } else {
+            return ""
         }
     }
     
