@@ -69,6 +69,7 @@ class EnterMovieViewController: UIViewController {
                 }
                 
                 if self.genreEditText.text != "" {
+                    self.genre = self.genreEditText.text!
                 }
                 
                 self.movieListViewModel.addMovie(withMovie: self.releaseYear, title: self.titleMovie, image: self.image, rating: self.rating, genre: [self.genre] , barcode: self.barcode)
