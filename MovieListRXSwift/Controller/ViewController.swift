@@ -21,6 +21,8 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Movie List"
+
         getMoviesFromRestAPI()
       //  coreDataExist()
 
@@ -85,6 +87,8 @@ class ViewController: UIViewController{
             }
         }.resume()
     }
+    
+    
     
 }
 
