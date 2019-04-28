@@ -66,6 +66,7 @@ class MovieDataAccessProvider {
         do {
             try managedObjectContext.save()
             movieFromCoreData.value = fetchData()
+            print("saving data")
         } catch {
             fatalError("error saving data")
         }

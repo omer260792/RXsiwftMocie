@@ -14,10 +14,15 @@ import RxSwift
 class PhotosCollectionViewController: UICollectionViewController {
     
     private let selectedPhotoSubject = PublishSubject<UIImage>()
+    private let selectedPathImage = PublishSubject<String>()
+    
     var selectedPhoto: Observable<UIImage> {
         return selectedPhotoSubject.asObservable()
     }
     
+    var selectedPath: Observable<String> {
+        return selectedPathImage.asObservable()
+    }
     private var images = [PHAsset]()
     let disposeBag = DisposeBag()
 
@@ -47,6 +52,12 @@ class PhotosCollectionViewController: UICollectionViewController {
             
             if !isDegradedImage {
                 
+                selectedAsset.requestContentEditingInput(with: PHContentEditingInputRequestOptions()) { (eidtingInput, info) in
+                    if let input = eidtingInput, let imgURL = input.fullSizeImageURL {
+                        let path:String = imgURL.description
+                        self?.selectedPathImage.onNext(path)
+                    }
+                }
                 if let image = image {
                     self?.selectedPhotoSubject.onNext(image)
                     self?.dismiss(animated: true, completion: nil)

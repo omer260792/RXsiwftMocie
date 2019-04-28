@@ -12,6 +12,8 @@ import RxSwift
 import RxCocoa
 import CoreData
 import SDWebImage
+import Photos
+
 
 class EnterMovieViewController: UIViewController {
 
@@ -77,7 +79,6 @@ class EnterMovieViewController: UIViewController {
                     self.genre = self.genreEditText.text!
                 }
                 
-                
                 self.movieListViewModel.addMovie(withMovie: self.releaseYear, title: self.titleMovie, image: self.image, rating: self.rating, genre: [self.genre] , barcode: self.barcode)
                 
                 self.navigationController?.popViewController(animated: true)
@@ -94,6 +95,11 @@ class EnterMovieViewController: UIViewController {
             let photosCVC = navC.viewControllers.first as? PhotosCollectionViewController else {
                 fatalError("Segue destination is not found")
         }
+        photosCVC.selectedPath.subscribe(onNext: { string in
+            self.savePath(with: string)
+           
+            
+        }).disposed(by: disposeBag)
         
         photosCVC.selectedPhoto.subscribe(onNext: { [weak self] photo in
             
@@ -110,8 +116,11 @@ class EnterMovieViewController: UIViewController {
         self.imageView.image = image
     }
     
+    private func savePath (with path: String) {
+        self.image = path
+        
+    }
     override func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
 }
