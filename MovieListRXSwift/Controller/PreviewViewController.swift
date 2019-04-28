@@ -26,29 +26,45 @@ class PreviewViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     var movieListViewModel = MovieListViewModel()
-     var movie = PublishSubject<Movie>()
+    var movie = PublishSubject<Movie>()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         getMovieByIndex()
     }
     
-    
     func getMovieByIndex()  {
-
         let observableMovies = movieListViewModel.getMovies().asObservable()
         observableMovies.subscribe({ Event in
-   
-            let imageURL = URL(string: (Event.element?.suffix(from: self.movieIndexRow!).first?.image)!)
-            self.imageView.sd_setImage(with: imageURL, completed: nil)
-            self.genreLabel.text = Event.element?.suffix(from: self.movieIndexRow!).first?.genre
-            self.titleLabel.text = Event.element?.suffix(from: self.movieIndexRow!).first?.title
-            self.releaseYearLabel.text = Event.element?.suffix(from: self.movieIndexRow!).first?.releaseYear
-            self.ratingLabel.text = Event.element?.suffix(from: self.movieIndexRow!).first?.rating
-            self.barcodeLabel.text = Event.element?.suffix(from: self.movieIndexRow!).first?.barcode
+            if let movieIndex = self.movieIndexRow {
+                
+                if let imageURL = Event.element?.suffix(from: movieIndex).first?.image{
+                    self.imageView.sd_setImage(with: URL(string: imageURL), completed: nil)
 
-            }).disposed(by: disposeBag)
+                }
+                
+                if let title = Event.element?.suffix(from: movieIndex).first?.title {
+                    self.titleLabel.text = title
+                }
+   
+                if let releaseYear = Event.element?.suffix(from: movieIndex).first?.releaseYear {
+                    self.releaseYearLabel.text = releaseYear
+                }
+                
+                if let rating = Event.element?.suffix(from: movieIndex).first?.rating {
+                    self.ratingLabel.text = rating
+                }
+                
+                if let genre = Event.element?.suffix(from: movieIndex).first?.genre {
+                    self.genreLabel.text = genre
+                }
+                
+                if let barcode = Event.element?.suffix(from: movieIndex).first?.barcode {
+                     self.barcodeLabel.text = barcode
+                }
+                
+            }
+        }).disposed(by: disposeBag)
     }
     
 

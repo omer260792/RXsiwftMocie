@@ -106,10 +106,7 @@ class MovieDataAccessProvider {
         let _ : [Character]
         var string : [String] = []
         var endstring : String = ""
-        
         string = res.components(separatedBy: "\"")
-        
-        
         for n in 0...string.count-1{
             endstring = endstring + string[n]
         }
@@ -122,14 +119,14 @@ extension String {
     
     func trim(_ string: String) -> String {
         var set = Set<Character>()
-        for c in string.characters {
+        for c in string {
             set.insert(Character(String(c)))
         }
         return trim(set)
     }
     
     func trim(_ characters: Set<Character>) -> String {
-        if let index = self.characters.index(where: {!characters.contains($0)}) {
+        if let index = self.index(where: {!characters.contains($0)}) {
             return String(self[index..<self.endIndex])
         } else {
             return ""

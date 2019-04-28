@@ -45,38 +45,30 @@ class EnterMovieViewController: UIViewController {
 
         view.addGestureRecognizer(tap)
         self.hideKeyboardWhenTappedAround()
-
-
     }
     
-    
-    func addImageMovie()  {
-        if addImageOutlet != nil {
-        
-        }
-    }
-
     func saveMovie()  {
         if let addMovie = saveMovieOutlet {
             addMovie.rx.tap.subscribe{ _ in
                 
-                if self.releaseYearEditText.text != "" {
-                    self.releaseYear = Double((self.releaseYearEditText.text!)) ?? 0
-                }
-                if self.titleEditText.text != "" {
-                    self.titleMovie = self.titleEditText.text!
+                if let barcode = self.barcodeEditText.text {
+                    self.barcode = barcode
                 }
                 
-                if self.ratingEditText.text != "" {
-                    self.rating = Double((self.ratingEditText.text!)) ?? 0
-                }
-             
-                if self.barcodeEditText.text != "" {
-                    self.barcode = self.barcodeEditText.text!
+                if let rating = self.ratingEditText.text {
+                    self.rating = Double(rating) ?? 0
                 }
                 
-                if self.genreEditText.text != "" {
-                    self.genre = self.genreEditText.text!
+                if let title = self.titleEditText.text {
+                    self.title = title
+                }
+                
+                if let releaseYear = self.releaseYearEditText.text {
+                    self.releaseYear = Double(releaseYear) ?? 0
+                }
+                
+                if let genre = self.genreEditText.text {
+                      self.genre = genre
                 }
                 
                 self.movieListViewModel.addMovie(withMovie: self.releaseYear, title: self.titleMovie, image: self.image, rating: self.rating, genre: [self.genre] , barcode: self.barcode)
@@ -84,7 +76,7 @@ class EnterMovieViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
                 self.dismiss(animated: true, completion: nil)
                 
-                }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         }
     }
 

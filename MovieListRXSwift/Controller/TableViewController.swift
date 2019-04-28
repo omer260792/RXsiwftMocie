@@ -41,14 +41,18 @@ class TableViewController: UIViewController {
         
         observableMovies.bind(to: tableView.rx.items(cellIdentifier: "Cell", cellType: TableViewCell.self)) { (row, element, cell) in
             
-            let imageURL = URL(string: element.image!)
+            if let img = element.image {
+                 let imageURL = URL(string: img)
+                cell.imageviewCell?.sd_setImage(with: imageURL, completed:nil)
+
+            }
+           
             
             cell.titleLabel.text = element.title
             cell.releaseYearLabel.text = element.releaseYear 
             cell.genreLabel.text = element.genre
             cell.ratingLabel.text = element.rating
             cell.barcodeLabel.text = element.barcode
-            cell.imageviewCell?.sd_setImage(with: imageURL, completed:nil)
 
             if element.isCompleted {
                 cell.accessoryType = .checkmark

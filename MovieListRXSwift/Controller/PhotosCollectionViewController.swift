@@ -23,6 +23,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     var selectedPath: Observable<String> {
         return selectedPathImage.asObservable()
     }
+    
     private var images = [PHAsset]()
     let disposeBag = DisposeBag()
 
@@ -117,7 +118,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     func setNavigationTopBar() {
         navigationItem.title = "Pick Up Photo"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "x", style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image:  UIImage(named: "x_button.png"), style: .plain, target: self, action: nil)
+        
         if let rightBtn = navigationItem.rightBarButtonItem {
             rightBtn.rx.tap.subscribe{ _ in
                 self.dismiss(animated: true, completion: nil)

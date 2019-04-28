@@ -34,10 +34,9 @@ class ViewController: UIViewController{
         movieList.subscribe{ element in
             if let allMovieItemCoreData = element.element?.count {
                 if allMovieItemCoreData > 0{
-                   bool = true
+                    bool = true
                 }else{
                     bool = false
-
                 }
             }
         }.disposed(by: disposeBag)
