@@ -16,3 +16,19 @@ struct MovieObject: Codable {
     let releaseYear: Double
     let genre: [String]
 }
+
+
+struct MovieList: Codable {
+    let MovieObjects: [MovieObject]
+}
+
+extension MovieList {
+    
+    static var all: Resource<MovieList> = {
+        let url = URL(string: "https://api.androidhive.info/json/movies.json")!
+        return Resource(url: url)
+    }()
+    
+}
+
+

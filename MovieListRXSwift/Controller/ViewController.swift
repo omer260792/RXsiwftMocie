@@ -16,78 +16,53 @@ class ViewController: UIViewController{
     
     var movieListViewModel = MovieListViewModel()
     var disposeBag = DisposeBag()
+    private var Movies = [MovieObject]()
 
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Movie List"
 
         getMoviesFromRestAPI()
-      //  coreDataExist()
-
-
     }
 
-    
+    // MARK: - checking if core data exist and not empty
+
     func coreDataExist() -> Bool {
-        
+        var bool: Bool = false
         let movieList = movieListViewModel.getMovies().asObservable()
-        
         movieList.subscribe{ element in
-            print(element.element?.count)
-            
             if let allMovieItemCoreData = element.element?.count {
                 if allMovieItemCoreData > 0{
-                    for n in 0...allMovieItemCoreData {
-                        self.movieListViewModel.removeMovie(withIndex: n)
-                    }
+                   bool = true
+                }else{
+                    bool = false
+
                 }
-               
             }
-            
-           
         }.disposed(by: disposeBag)
-        
-       
-        return true
-    }
-
-    func getMoviesFromRestAPI() {
-
-        let urlString = "https://api.androidhive.info/json/movies.json"
-        guard let url = URL(string: urlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print(error!.localizedDescription)
-            }
-            guard let data = data else { return }
-
-            //Implement JSON decoding and parsing
-            do {
-
-                //Decode retrived data with JSONDecoder and assing type of Article object
-                let moviesData = try JSONDecoder().decode([MovieObject].self, from: data)
-                
-                if moviesData.first != nil {
-                    
-                for movie in moviesData{
-                    let code = ""
-                    DispatchQueue.main.async {
-                       self.movieListViewModel.addMovie(withMovie: movie.releaseYear, title: movie.title, image: movie.image, rating: movie.rating, genre: movie.genre , barcode: code)
-                        }
-                    }
-                    
-
-                }
-                
-            } catch let jsonError {
-                print(jsonError)
-            }
-        }.resume()
+        return bool
     }
     
+    // MARK: - Get api url from server and save it in core data
+    
+    func getMoviesFromRestAPI() {
+        URLRequest.load(resource: MovieList.all)
+            .subscribe(onNext: { result in
+                if result.first != nil {
+                    let coreDataExist = self.coreDataExist()
+                        if (!coreDataExist) {
+                            for movie in result{
+                                let code = ""
+                                DispatchQueue.main.async {
+                                    self.movieListViewModel.addMovie(withMovie: movie.releaseYear, title: movie.title, image: movie.image, rating: movie.rating, genre: movie.genre , barcode: code)
+                                }
+                            }
+                        }
+                    }
+        }).disposed(by: disposeBag)
+            
+    }
     
     
 }

@@ -103,7 +103,7 @@ class TableViewController: UIViewController {
     func setNavigationTopBar() {
         navigationItem.title = "Movie List"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "+", style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "add.png") , style: .plain, target: self, action: nil)
         if let rightBtn = navigationItem.rightBarButtonItem {
             rightBtn.rx.tap.subscribe{ _ in
                 self.performSegue(withIdentifier: "yourIdentifierInStoryboard", sender: self)

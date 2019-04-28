@@ -96,7 +96,8 @@ class MovieDataAccessProvider {
         }
     }
     
-    
+    // MARK: - Get array string and trim string to Core Data
+
     func trimString(genre: String) -> String {
         let str = genre
         var res = str.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
@@ -113,22 +114,6 @@ class MovieDataAccessProvider {
         }
         return endstring
     }
-    
-//    // MARK: - remove specified movie from Core Data
-//    public func removeAllMovie(withIndex index: Int) {
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Movie")
-//        var moviesCoreData = try managedObjectContext.fetch(fetchRequest)
-//
-//        managedObjectContext.delete(index)
-//        
-//        do {
-//            try managedObjectContext.save()
-//         //   movieFromCoreData.value = fetchData()
-//        } catch {
-//            fatalError("error delete data")
-//        }
-//    }
-//    
 }
 
 

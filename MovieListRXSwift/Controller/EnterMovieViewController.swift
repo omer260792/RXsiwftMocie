@@ -39,12 +39,17 @@ class EnterMovieViewController: UIViewController {
         super.viewDidLoad()
         
       saveMovie()
-        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+
+        view.addGestureRecognizer(tap)
+        self.hideKeyboardWhenTappedAround()
+
+
     }
     
     
     func addImageMovie()  {
-        if let addImage = addImageOutlet {
+        if addImageOutlet != nil {
         
         }
     }
@@ -72,6 +77,7 @@ class EnterMovieViewController: UIViewController {
                     self.genre = self.genreEditText.text!
                 }
                 
+                
                 self.movieListViewModel.addMovie(withMovie: self.releaseYear, title: self.titleMovie, image: self.image, rating: self.rating, genre: [self.genre] , barcode: self.barcode)
                 
                 self.navigationController?.popViewController(animated: true)
@@ -93,6 +99,7 @@ class EnterMovieViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self?.updateUI(with: photo)
+                
             }
             
         }).disposed(by: disposeBag)
@@ -101,5 +108,23 @@ class EnterMovieViewController: UIViewController {
     
     private func updateUI(with image: UIImage) {
         self.imageView.image = image
+    }
+    
+    override func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+}
+
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
