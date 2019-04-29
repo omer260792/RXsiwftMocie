@@ -9,4 +9,10 @@ target 'MovieListRXSwift' do
   pod 'RxCocoa','~> 4.0'
   pod 'SDWebImage', '~> 4.0'
 
+  target 'MovieListRXSwiftTests' do
+    inherit! :search_paths
+    pod 'RxBlocking', '~> 4.0'
+    pod 'RxTest',     '~> 4.0'
+  end
+
 end
